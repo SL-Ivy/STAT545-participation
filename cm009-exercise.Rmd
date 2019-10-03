@@ -118,9 +118,9 @@ email %>%
 
 ```{r}
 n <- 100
-FILL_THIS_IN(label = FILL_THIS_IN,
-             FILL_THIS_IN = rnorm(n),
-             FILL_THIS_IN)
+tibble(label = "Sample A",
+             x = rnorm(n),
+             y= x + rnorm(n))
 ```
 
 
@@ -144,9 +144,8 @@ experiment <- tibble(
   trt  = rep(c("a", "b", "a"), c(3, 2, 1)),
   rep = c(1, 2, 3, 1, 2, 1),
   measurement_1 = runif(6),
-  measurement_2 = runif(6)
-)
-experiment %>% expand(name, trt, rep)
+  measurement_2 = runif(6))
+experiment %>% expand(nesting(name, trt, rep))
 ```
 
 
