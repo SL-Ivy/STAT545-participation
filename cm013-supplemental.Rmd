@@ -10,10 +10,7 @@ output:
 suppressPackageStartupMessages(library(tidyverse))
 library(gapminder)
 ```
-## What "effective visualizations" means to me?
-* Graphs are self explanatory, which means it should include all the information in a deliverable way. Shouldn't be too complicated to understand
-* Plot type should make sense
-* The use of the colour should be careful and meaning for
+
 
 # Saving Graphs to File
 

@@ -28,11 +28,11 @@ Note, there will be very little coding in-class today, but I've given you plenty
 
 Write some notes here about what "effective visualizations" means to you. Think of elements of good graphics and plots that you have seen - what makes them good or bad? Write 3-5 points.
 
-1. 
-1. 
-1. 
-1. 
-1.
+1. Graphs are self explanatory, which means it should include all the information in a deliverable way. And it shouldn't be too complicated to understand
+2. Plot type should make sense
+3. The use of the colour should be careful and meaning for
+4. 
+5. 
 
 ### CQ01: Weekly hours for full-time employees
 
@@ -40,19 +40,19 @@ Write some notes here about what "effective visualizations" means to you. Think 
 >
 > Very strong, strong, weak, very week, do not know
 
-- <<Your answer here (and make sure to explain why you chose this answer)>>
+- Weak. There are two points in the statment, "more motivate" and "work more hours". From the numbers and the bars, it can somehow to see the difference. But it lack of sample size, measure of the variations.
 
-- Main takeaway: Summarize the main takeaway from this question/discussion here
+- Main takeaway: The things shown in the graph should be sufficient to support the statment associated with it, and include enough necessary information for the data, e.g. sample size.
 
 ### CQ02: Average Global Temperature by year
 
 > Question: For the years this temperature data is displayed, is there an appreciable increase in temperature?
 > 
-> Yes, No, Do not know
+> Yes, but not very obviouse.
 
-- <<Your answer here (and make sure to explain why you chose this answer)>>
+- It can be seen that the slope of the line slightly tited up from left to right, but not that obviouse due to the large y-axis. And it didn't include the label for x-axis, we cannot know what is the interval/space between two data points.
 
-- Main takeaway: Summarize the main takeaway from this question/discussion here
+- Main takeaway: Choose the appropriate scale is very important.
 
 ### CQ03: Gun deaths in Florida
 
@@ -93,6 +93,36 @@ How many of the principles did you manage to break?
 Did you know that you can make interactive graphs and plots in R using the plotly library? We will show you a demo of what plotly is and why it's useful, and then you can try converting a static ggplot graph into an interactive plotly graph.
 
 This is a preview of what we'll be doing in STAT 547 - making dynamic and interactive dashboards using R!
+
+```{r}
+install.packages("plotly")
+library(tidyverse)
+library(gapminder)
+library(plotly)
+```
+
+```{r}
+p <- ggplot(gapminder, aes(x= gdpPercap, y= lifeExp, colour = continent)) +
+  geom_point()
+
+p
+
+#make interactive
+p%>%
+  ggplotly()
+
+#plot_ly syntas
+gapminder %>%
+  plot_ly( x ~ gdpPefcap,
+           y= ~lifeExp,
+           colour = continent,
+           type = "scatter",
+           mode = "markers")
+
+Sys.setenv("plotly_username" = "SL_Ivy")
+Sys.setenv("plotly_api_key" ="Bs09XTOl086UOuuNu9KQ")
+api_create(x= p,filename = "cm013-plotly-example" )
+```
 
 ## Supplemental worksheet (Optional)
 
