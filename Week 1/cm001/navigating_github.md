@@ -1,7 +1,3 @@
----
-output: html_document
----
-
 Reference links
 
 - **STAT545-home**
