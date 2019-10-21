@@ -29,7 +29,8 @@ knitr::opts_chunk$set(fig.align = "center")
 <!---The following chunk allows errors when knitting--->
 
 ```{r allow errors, echo = FALSE}
-knitr::opts_chunk$set(error = TRUE)
+knitr::opts_chunk$set(error = TRUE) 
+# This is very important to prevent the error to stop you from knitting#
 ```
 
 ## Exercise 1: Bar Chart Grammar (Together)
@@ -55,7 +56,8 @@ Fill in the seven grammar components for this plot.
 | scale                 | linear |
 | statistical transform | count |
 | coordinate system     | rectangular |
-| facetting             | no |
+| facetting             | no | (if yes, mutiple graphs will be produced)
+
 
 ## Exercise 2: `ggplot2` Syntax (Your Turn)
 
@@ -64,8 +66,8 @@ The following is a tsibble (a special type of tibble containing time series data
 Execute this code to store the data in `mauna`:
 
 ```{r}
-(mauna <- tsibble::as_tsibble(co2) %>% 
-   rename(month = index, conc = value))
+(mauna <- tsibble::as_tsibble(co2) %>%     # A tsibble is sorted by its key first and index.
+   rename(month = index, conc = value)) # choose variables from a tbl to rename 
 ```
 
 ### 2(a)
@@ -88,6 +90,10 @@ Fill in the blanks to obtain the plot:
 ggplot(mauna, aes(month, conc)) +
   geom_line()
 ```
+```{r, fig.width = 5, fig.height = 2}
+(p <- ggplot(mauna, aes(month, conc)) +
+  geom_line()) # store the plot to p#
+```
 
 ### 2(b)
 
@@ -100,7 +106,8 @@ The following code mistakenly puts the month variable on the y-axis. Fill in the
 
 ```{r, fig.width = 5, fig.height = 2}
 ggplot(mauna, aes(y = month)) +
-  geom_line(aes(x = month, y = conc))
+  geom_line(aes(x = month, y = conc))+
+  ylab(expression(paste(CO[2], " Concentration")))
 ```
 
 ### 2(c)
@@ -118,7 +125,7 @@ What's wrong with the following code? Fix it.
 
 ```{r, fig.width = 5, fig.height = 2}
 ggplot(gapminder) +
-  geom_point(aes(x = gdpPercap, y = lifeExp), alpha = 0.1)
+  geom_point(aes(x = gdpPercap, y = lifeExp), alpha = 0.1) # x, y should be inclosed in ()
 ```
 
 
@@ -132,7 +139,15 @@ So you're a ggplot2 pro? Then, let's see this plot adapted to polar coordinates.
 The plot should look like a spiral, or concentric circles. 
 
 ```{r, fig.width = 5, fig.height = 2}
-FILL_THIS_IN
+suppressPackageStartupMessages(library(lubridate))
+ggplot(mauna, aes(month(month), conc)) +
+  geom_line(aes(group = year(month), colour = conc), alpha = 0.2) +  # change the colour by conc
+  coord_polar() +
+  scale_x_continuous(breaks = 1:12, 
+                     labels = month.abb) +
+  labs(x = "", 
+       y = expression(paste(CO[2], " Concentration"))) +  # [] to change 2 as subscript
+  theme_bw()
 ```
 
 
