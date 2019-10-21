@@ -1,6 +1,8 @@
 ---
 title: 'cm006: `dplyr` Exercise'
-output: html_notebook
+output: 
+  html_document: 
+    keep_md: yes
 editor_options: 
   chunk_output_type: inline
 ---
@@ -36,6 +38,7 @@ library(tidyverse)
 
 ```{r}
 select(gapminder, year, lifeExp, country)
+#Choose variables from a tbl. select() keeps only the variables you mention#
 ```
 
 
@@ -46,7 +49,7 @@ select(gapminder, year, lifeExp, country)
 select(gapminder, country, continent, year, lifeExp)
 
 # Better way:
-select(gapminder, country:lifeExp)
+select(gapminder, country:lifeExp) #same function as [from:to] in vector
 ```
 
 
@@ -67,9 +70,9 @@ select(gapminder, continent, 'everything'())
 
 ```{r}
 # compare
-select(gapminder, cont = continent, everything())
-
-rename(gapminder, cont = continent)
+select(gapminder, cont = continent, everything()) # select contitnent and keep everthing else
+select(gapminder, country, gdpPercap:continent) # display `country` first, and reverse the order for rest of the variables
+rename(gapminder, cont = continent) # rename the continent, keep the orignal order
 ```
 
 
@@ -105,6 +108,7 @@ This is how I could do it by *nesting* the two function calls:
 
 ```{r nesting functions example, eval = F}
 # Nesting function calls can be hard to read
+# the inner function will be excuted first, then is the outer function.
 arrange(select(gapminder, year, lifeExp, country), year, lifeExp)
 ```
 
@@ -112,7 +116,7 @@ Now using with pipes:
 
 ```{r}
 # alter the below to include 2 "pipes"
-gapminder %>%
+gapminder %>%   # select(.data, ...), gapminder here will be the data
   select(year, lifeExp, country) %>%
   arrange (year, lifeExp)
 ```
@@ -179,7 +183,7 @@ Your turn: Make a new column called `cc` that pastes the country name followed b
 
 ```{r}
 gapminder %>%
-  mutate(cc)
+  mutate(cc = paste(country, continent, sep = ", "))
 ```
 
 These functions we've seen are called __vectorized functions__.
