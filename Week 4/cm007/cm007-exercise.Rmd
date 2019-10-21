@@ -27,8 +27,8 @@ This worksheet contains exercises aimed for practice with `dplyr`.
 ```{r}
 gapminder %>% 
   group_by(continent, year) %>% 
-  summarize(min_life = min(lifeExp), country = country [lifeExp == min_life]) %>%
-  arrange (min_life)
+  summarize(min_life = min(lifeExp), country = country [lifeExp == min_life]) %>% 
+  arrange (min_life) #default is increasing order
 ```
 
 2. Calculate the growth in population since the first year on record _for each country_ by rearranging the following lines, and filling in the `FILL_THIS_IN`. Here's another convenience function for you: `dplyr::first()`. 
