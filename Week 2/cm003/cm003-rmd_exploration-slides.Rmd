@@ -1,11 +1,7 @@
 ---
 title: "Tibble Exploration"
-output:
-  html_document:
-    keep_md: yes
-    number_sections: yes
-    theme: cerulean
-    toc: yes
+author: "SL_Ivy"
+output: ioslides_presentation
 ---
 
 ```{r load, warning = FALSE, echo = FALSE}
@@ -29,4 +25,3 @@ x <- gapminder
 ```{r}
 datatable(as_tibble(mtcars))
 ```
-
