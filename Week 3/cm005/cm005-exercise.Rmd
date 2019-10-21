@@ -1,8 +1,9 @@
 ---
-title: "cm005 Worksheet: Exploring Geometric Objects"
-output: 
+title: 'cm005 Worksheet: Exploring Geometric Objects'
+output:
+  pdf_document: default
   html_document:
-    keep_md: true
+    keep_md: yes
     theme: paper
 ---
 
@@ -116,7 +117,7 @@ You can store the output of the plot in a variable, too. Store the plot from 2(a
 
 ```{r, fig.width = 5, fig.height = 2}
 p +
-  geom_point(colour = "green")
+  geom_point(colour = "green"， size = 0.1)
 ```
 
 ### 2(d)
