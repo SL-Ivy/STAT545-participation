@@ -1,8 +1,4 @@
----
-output: 
-  pdf_document: 
-    keep_tex: yes
----
+
 Reference links
 
 - **STAT545-home**
