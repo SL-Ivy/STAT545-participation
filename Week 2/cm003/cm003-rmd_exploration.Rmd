@@ -1,15 +1,17 @@
 ---
 title: "Tibble Exploration"
-output: 
+output:
+  pdf_document:
+    toc: yes
   html_document:
-    toc: true
-    number_sections: true
+    keep_md: yes
+    number_sections: yes
     theme: cerulean
-    keep_md: true
+    toc: yes
 ---
 
 ```{r load, warning = FALSE, echo = FALSE}
-# things inside the ```{r}``` are executable, the chunk options can be set to fit different purposes, such as echo, warning. More: https://rmarkdown.rstudio.com/lesson-3.html #
+# things inside the ```{r}``` are executable, the chunk options can be set to fit different purposes, such as echo, warning. More chunk options can be found: /https://rmarkdown.rstudio.com/lesson-3.html
 library(tibble)
 library(gapminder)
 library(DT)
