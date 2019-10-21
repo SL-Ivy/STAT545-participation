@@ -1,0 +1,32 @@
+---
+title: "Tibble Exploration"
+output: 
+  html_document:
+    toc: true
+    number_sections: true
+    theme: cerulean
+    keep_md: true
+---
+
+```{r load, warning = FALSE, echo = FALSE}
+# things inside the ```{r}``` are executable, the chunk options can be set to fit different purposes, such as echo, warning. More: https://rmarkdown.rstudio.com/lesson-3.html #
+library(tibble)
+library(gapminder)
+library(DT)
+```
+
+
+## Print out gapminder data:
+
+```{r}
+x <- gapminder
+```
+
+<!--assign the x a value which equal to gapminder-->
+
+Convert mtcars to a tibble, and wrap in datatable:
+
+```{r}
+datatable(as_tibble(mtcars))
+```
+
