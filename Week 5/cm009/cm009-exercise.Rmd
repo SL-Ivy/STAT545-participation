@@ -1,6 +1,8 @@
 ---
 title: "cm009 Exercises: tidy data"
-output: html_notebook
+output: 
+  html_document: 
+    keep_md: yes
 editor_options: 
   chunk_output_type: inline
 ---
@@ -27,6 +29,9 @@ lotr
 ```
 
 1. Would you say this data is in tidy format?
+Each row is an observation; Each column is a variable; Each cell is a value.
+It means each value belongs to exactly one variable and one observation.
+There are mutiple rows for same film, but each value for the race, geneder, words belongs to exactly one variable (film).
 
 2. Widen the data so that we see the words spoken by each race, by putting race as its own column.
 
@@ -41,7 +46,7 @@ lotr
 
 ```{r}
 lotr_wide %>% 
-  pivot_longer(cols = c(-Film, -Gender), 
+  pivot_longer(cols = c(-Film, -Gender), # - sign means those col won't be changed
                names_to  = "Race", 
                values_to = "Words")
 ```
@@ -52,7 +57,7 @@ Congratulations, you're getting married! In addition to the wedding, you've deci
 
 ```{r}
 guest %>% 
-  DT::datatable(rownames = FALSE)
+  DT::datatable(rownames = FALSE) # roname = FALSE to remove default id for each row
 ```
 
 1. Put "meal" and "attendance" as their own columns, with the events living in a new column.
@@ -95,7 +100,7 @@ guest %>%
 ```{r}
 guest_long %>% 
   pivot_wider(id_cols     = c(party, name), 
-              names_from  = event, 
+              names_from  = event, # use the value in the event col to name the new col
               names_sep   = "_", 
               values_from = c(meal, attendance))
 ```
@@ -145,7 +150,10 @@ experiment <- tibble(
   rep = c(1, 2, 3, 1, 2, 1),
   measurement_1 = runif(6),
   measurement_2 = runif(6))
-experiment %>% expand(nesting(name, trt, rep))
+experiment %>% expand(nesting(name, trt, rep)) #expended format
+
+experiment %>% complete(name, trt, rep)
+experiment %>% complete(nesting(name, trt), rep)
 ```
 
 
