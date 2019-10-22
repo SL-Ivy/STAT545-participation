@@ -10,6 +10,7 @@ gapminder_sum <- gapminder %>%
   summarize(ave_lifeExp = mean(lifeExp))
 
 view(gapminder_sum)
-write_csv(gapminder_sum, './gapminder_sum.csv')
+write_csv(gapminder_sum, './Week 6/cm011/gapminder_sum.csv')
 
-gapminder_sum
+gapminder_sum %>%
+  ggplot(aes(x = continent, y=ave_lifeExp))+ geom_point()+ theme_classic()
