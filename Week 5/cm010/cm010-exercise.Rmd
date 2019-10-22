@@ -50,9 +50,12 @@ The package `singer` comes with two smallish data frames about songs. Let's take
 
 ```{r}
 time %>% 
-  semi_join(album, by = c("song", "artist_name"))
+  semi_join(album, by = c("song", "artist_name")) 
+#semi_join(x, y): Return all rows from x where there are matching values in y, keeping just columns from x#
+
 time %>%
   inner_join( album, by=c("song", "artist_name"))
+#inner_join(x, y): Return all rows from x where there are matching values in y, and all columns from x and y.#
 ```
 
 2. Go ahead and add the corresponding albums to the `time` tibble, being sure to preserve rows even if album info is not readily available.
@@ -60,6 +63,7 @@ time %>%
 ```{r}
 time %>% 
   left_join(album, by=c("song", "artist_name"))
+#left_join(x, y): Return all rows from x, and all columns from x and y. If there are multiple matches between x and y, all combination of the matches are returned. This is a mutating join.#
 ```
 
 3. Which songs do we have "year", but not album info?
@@ -98,15 +102,16 @@ retk <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/dat
 1. Combine these into a single tibble.
 
 ```{r}
-FILL_THIS_IN(fell, FILL_THIS_IN)
+bind_rows(fell, ttow, retk)
 ```
 
 2. Which races are present in "The Fellowship of the Ring" (`fell`), but not in any of the other ones?
 
 ```{r}
 fell %>% 
-  anti_join(ttow, by = "Race") %>% 
-  FILL_THIS_IN(FILL_THIS_IN, by = "Race")
+  anti_join(ttow, by = "Race") %>% #1st filtering join
+  anti_join(retk, by = "Race")
+#anti_join(x, y): Return all rows from x where there are not matching values in y, keeping just columns from x.#
 ```
 
 
@@ -133,7 +138,7 @@ inner_join(y, x)
 2. You collected the data in `y` on Day 1, and `z` in Day 2. Make a data set to reflect that.
 
 ```{r}
-FILL_THIS_IN(
+union(
   mutate(y, day = "Day 1"),
   mutate(z, day = "Day 2")
 )
