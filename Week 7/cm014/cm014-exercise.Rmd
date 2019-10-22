@@ -1,9 +1,17 @@
 ---
 title: "cm014 Worksheet: The Model-Fitting Paradigm in R"
-output: html_notebook
+output: 
+  html_document: 
+    keep_md: yes
 editor_options: 
   chunk_output_type: inline
 ---
+
+<!---The following chunk allows errors when knitting--->
+
+```{r allow errors, echo = FALSE}
+knitr::opts_chunk$set(error = TRUE, warning = FALSE)
+```
 
 ```{r}
 suppressPackageStartupMessages(library(tidyverse))
@@ -139,13 +147,6 @@ predict(my_lm, newdata = gapminder_France2) %>%
 ```{r}
 plot(my_lm)
 ```
-
-```{r}
-years1 = FILL_THIS_IN
-predict(my_lm,years1)
-
-```
-
 
 
 We can plot models (with one predictor/ X variable) using `ggplot2` through the `geom_smooth()` layer. Specifying `method="lm"` gives us the linear regression fit (but only visually!):
