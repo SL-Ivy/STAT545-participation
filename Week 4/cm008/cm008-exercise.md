@@ -34,14 +34,13 @@ After fixing the error, fix the overlapping problem in the following plot (attri
 
 
 ```r
-ggplot(mpg, aes(cty, hwy)) %>% 
-  geom_point()
+ggplot(mpg, aes(cty, hwy)) + 
+  geom_jitter(alpha = 0.3, size = 2)+   #alpha change the transparency, means how many dots (1/alpha) overlap together to gave a opaque dot#
+  geom_smooth(method = 'lm')+ #lm is linear regression
+  theme_bw()
 ```
 
-```
-## Error: `mapping` must be created by `aes()`
-## Did you use %>% instead of +?
-```
+![](cm008-exercise_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
 
 ## Exercise 2: Line for each Country
@@ -51,9 +50,10 @@ Fix this plot so that it shows life expectancy over time _for each country_. Not
 
 ```r
 gapminder %>% 
-  group_by(country) %>% 
-  ggplot(aes(year, lifeExp)) +
-  geom_line()
+  #  group_by(country) %>% groupby function doesn't work for ggplot, need to use group inside ggplot.
+  ggplot(aes(year, lifeExp, group = country, colour = country == "Rwanda")) +
+  geom_line(alpha = 1/3) +
+  scale_colour_discrete("Rwanda", label = c("Other", "Rwanda"))
 ```
 
 ![](cm008-exercise_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
@@ -70,7 +70,8 @@ gapminder %>%
 ```r
 ggplot(gapminder, aes(gdpPercap, lifeExp)) +
   geom_point(alpha = 0.2) +
-  scale_x_log10()
+  scale_x_log10(labels = scales::comma_format())+ #scientific number format
+  facet_wrap(~ continent, scales = 'free_y' ) # ~ has same functions as "", free means the freed axis can be different
 ```
 
 ![](cm008-exercise_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
@@ -86,10 +87,12 @@ ggplot(gapminder, aes(gdpPercap, lifeExp)) +
 ```r
 gapminder %>% 
   filter(continent != "Oceania") %>% 
-  ggplot(aes(gdpPercap, lifeExp)) +
-  facet_wrap(~ continent) +
-  geom_point(alpha = 0.2) +
-  scale_x_log10(labels = scales::comma_format())
+  ggplot(aes(gdpPercap, lifeExp, size = pop, fill = continent)) +
+  facet_wrap(~ continent, nrow=1) +
+  geom_point(alpha = 0.5, shaple = 21) +
+  scale_x_log10(labels = scales::comma_format())+
+   scale_size_area()+
+  scale_fill_discrete(guide = FALSE)
 ```
 
 ![](cm008-exercise_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
@@ -103,7 +106,7 @@ Instead of alpha transparency, suppose you're wanting to fix the overplotting is
 
 ```r
 ggplot(gapminder) +
-  geom_point(aes(gdpPercap, lifeExp, size = 0.1)) +
+  geom_point(aes(gdpPercap, lifeExp), size = 0.1) + #size need to be outside of the aes()
   scale_x_log10(labels = scales::dollar_format())
 ```
 
@@ -146,7 +149,9 @@ gapminder %>%
   filter(continent == "Americas") %>% 
   ggplot(aes(country, lifeExp)) + 
   geom_point() +
-  geom_boxplot()
+  geom_boxplot()+
+  theme(axis.text.y = element_text(size=4))+
+  coord_flip()
 ```
 
 ![](cm008-exercise_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
@@ -159,9 +164,13 @@ We're starting with the same plot as above, but instead of the points + boxplot,
 ```r
 gapminder %>% 
   filter(continent == "Americas") %>% 
-  ggplot(aes(country, lifeExp)) + 
+  ggplot(aes(lifeExp, country)) + 
   geom_point() +
-  geom_boxplot()
+  ggridges::geom_density_ridges() 
+```
+
+```
+## Picking joint bandwidth of 3.63
 ```
 
 ![](cm008-exercise_files/figure-html/unnamed-chunk-9-1.png)<!-- -->

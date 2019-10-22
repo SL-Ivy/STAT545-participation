@@ -35,8 +35,8 @@ After fixing the error, fix the overlapping problem in the following plot (attri
 
 ```{r, fig.width = 5, fig.height = 2}
 ggplot(mpg, aes(cty, hwy)) + 
-  geom_jitter(alpha = 0.3, size = 2)+
-  geom_smooth(method = 'lm')+
+  geom_jitter(alpha = 0.3, size = 2)+   #alpha change the transparency, means how many dots (1/alpha) overlap together to gave a opaque dot#
+  geom_smooth(method = 'lm')+ #lm is linear regression
   theme_bw()
 ```
 
@@ -47,7 +47,7 @@ Fix this plot so that it shows life expectancy over time _for each country_. Not
 
 ```{r, fig.width = 5, fig.height = 2}
 gapminder %>% 
-  #  group_by(country) %>% 
+  #  group_by(country) %>% groupby function doesn't work for ggplot, need to use group inside ggplot.
   ggplot(aes(year, lifeExp, group = country, colour = country == "Rwanda")) +
   geom_line(alpha = 1/3) +
   scale_colour_discrete("Rwanda", label = c("Other", "Rwanda"))
@@ -82,7 +82,8 @@ gapminder %>%
   facet_wrap(~ continent, nrow=1) +
   geom_point(alpha = 0.5, shaple = 21) +
   scale_x_log10(labels = scales::comma_format())+
-   scale_size_area()
+   scale_size_area()+
+  scale_fill_discrete(guide = FALSE)
 
 ```
 
@@ -94,7 +95,7 @@ Instead of alpha transparency, suppose you're wanting to fix the overplotting is
 
 ```{r, fig.width = 5, fig.height = 2}
 ggplot(gapminder) +
-  geom_point(aes(gdpPercap, lifeExp, size = 0.1)) +
+  geom_point(aes(gdpPercap, lifeExp), size = 0.1) + #size need to be outside of the aes()
   scale_x_log10(labels = scales::dollar_format())
 ```
 
@@ -131,7 +132,10 @@ gapminder %>%
   filter(continent == "Americas") %>% 
   ggplot(aes(country, lifeExp)) + 
   geom_point() +
-  geom_boxplot()
+  geom_boxplot()+
+  theme(axis.text.y = element_text(size=4))+
+  coord_flip()
+  
 ```
 
 ### 5(b) Ridgeplots
@@ -141,9 +145,11 @@ We're starting with the same plot as above, but instead of the points + boxplot,
 ```{r, fig.width = 5, fig.height = 2}
 gapminder %>% 
   filter(continent == "Americas") %>% 
-  ggplot(aes(country, lifeExp)) + 
+  ggplot(aes(lifeExp, country)) + 
   geom_point() +
-  geom_boxplot()
+  ggridges::geom_density_ridges() 
+
+  
 ```
 
 ## Exercise 6: Bar plot madness
