@@ -1,1 +1,1 @@
-# STAT545-participation
+# Ivy's STAT545-participation repo
